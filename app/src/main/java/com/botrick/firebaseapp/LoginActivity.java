@@ -1,17 +1,15 @@
 package com.botrick.firebaseapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,6 +30,17 @@ public class LoginActivity extends AppCompatActivity {
         editEmail  = findViewById(R.id.login_edit_email);
         editSenha = findViewById(R.id.login_edit_senha);
 
+        //caso usuario logado
+        if(auth.getCurrentUser()!=null){
+            String email = auth.getCurrentUser().getEmail();
+
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+            //passar o email para a MainActivity
+            intent.putExtra("email", email);
+            startActivity(intent);
+        }
+
         btnCadastrar.setOnClickListener(v -> {Intent intent = new Intent(getApplicationContext(), CadastroActivity.class);
             startActivity(intent);
         });
@@ -51,20 +60,44 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        //t -> é uma tarefa para logar
-        Task<AuthResult> t = auth.signInWithEmailAndPassword(email, senha);
-
-        t.addOnSuccessListener(authResult -> {
+        auth.signInWithEmailAndPassword(email, senha)
+        .addOnSuccessListener(authResult -> {
             Toast.makeText(this,"Bem Vindo!", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
             startActivity(intent);
-        });
+        })
 
         //Listener de falha
-        t.addOnFailureListener(e -> {
+        .addOnFailureListener(e -> {
+            /*
             //parametro e -> Exception
-            Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro: " + e.getClass().toString(), Toast.LENGTH_SHORT).show();
+
+            Log.e("Erro", "Mensagem: " + e.getMessage() + "Classe: " + e.getClass().toString());
+            */
+
+            try {
+                //disparando a exception
+                throw e;
+            }
+
+            catch (FirebaseAuthInvalidUserException userException){
+                //exceção para e-mail invalido
+                Toast.makeText(this, "E-mail invalido!", Toast.LENGTH_SHORT).show();
+            }
+
+            catch (FirebaseAuthInvalidCredentialsException credException){
+                //exceção para senha incorreta
+                Toast.makeText(this, "Senha incorreta!", Toast.LENGTH_SHORT).show();
+            }
+
+            catch (Exception ex){
+                //exceção genérica
+                Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
     }

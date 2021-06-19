@@ -1,14 +1,17 @@
 package com.botrick.firebaseapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private Button btnLogout;
+    private Button btnLogout, btnStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnLogout = findViewById(R.id.main_btn_logout);
+        btnStorage = findViewById(R.id.main_btn_storage);
+
+        btnStorage.setOnClickListener(v -> {
+            //abrir a storagem activity
+            Intent intent = new Intent(getApplicationContext(), StorageActivity.class);
+            startActivity(intent);
+        });
 
         btnLogout.setOnClickListener(v -> {
             //desloga o usuario

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.botrick.firebaseapp.model.Upload;
+import com.botrick.firebaseapp.util.LoadinDialog;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -74,6 +75,9 @@ public class StorageActivity extends AppCompatActivity {
     }
 
     private void uploadImagemUri() {
+        LoadinDialog dialog = new LoadinDialog(this, R.layout.custom_dialog);
+        dialog.startLoadingDialog();
+
         String tipo = getFileExtension(imageUri);
 
         //referencia do arquivo no firebase
@@ -99,7 +103,13 @@ public class StorageActivity extends AppCompatActivity {
 
                         Upload upload = new Upload(id, nome, uri.toString());
                         //Salvando upload no db
-                        refUpload.setValue(upload);
+                        refUpload.setValue(upload).addOnSuccessListener(aVoid -> {
+                            dialog.dismissDialog();
+                            Toast.makeText(getApplicationContext(), "Uplaod Feito com Sucesso!", Toast.LENGTH_SHORT).show();
+
+                            finish();
+                        });
+
                     });
 
         })

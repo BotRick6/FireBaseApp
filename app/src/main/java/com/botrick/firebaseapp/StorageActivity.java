@@ -132,7 +132,7 @@ public class StorageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("Result", "RequestCode: "+ requestCode +", resultCode: " +resultCode);
 
-        if (resultCode==111 && resultCode== Activity.RESULT_OK){
+        if (requestCode==111 && resultCode== Activity.RESULT_OK){
             //caso o usuario selecionou outra imagem da galeria
 
             //Endereço da imagem selecionada

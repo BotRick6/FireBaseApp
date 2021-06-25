@@ -52,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onUpdateClick(int position) {
+                Upload upload = listaUploads.get(position);
+                Intent intent = new Intent(getApplicationContext(), UpdateActivity.class);
 
+                //envia o upload para outra activity
+                intent.putExtra("upload", upload);
+                startActivity(intent);
             }
 
         });

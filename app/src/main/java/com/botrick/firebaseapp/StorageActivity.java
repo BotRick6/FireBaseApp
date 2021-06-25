@@ -93,24 +93,22 @@ public class StorageActivity extends AppCompatActivity {
             //Inserir dados da imagem no RealtimeDatabase
 
             //pegar a URL da imagem
-            taskSnapshot.getStorage().getDownloadUrl()
-                    .addOnSuccessListener(uri -> {
-                        //inserir no database
+            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
+                //inserir no database
 
-                        //criando referencia(database) do upload
-                        DatabaseReference refUpload = database.push();
-                        String id = refUpload.getKey();
+                //criando referencia(database) do upload
+                DatabaseReference refUpload = database.push();
+                String id = refUpload.getKey();
 
-                        Upload upload = new Upload(id, nome, uri.toString());
-                        //Salvando upload no db
-                        refUpload.setValue(upload).addOnSuccessListener(aVoid -> {
-                            dialog.dismissDialog();
-                            Toast.makeText(getApplicationContext(), "Uplaod Feito com Sucesso!", Toast.LENGTH_SHORT).show();
+                Upload upload = new Upload(id, nome, uri.toString());
+                //Salvando upload no db
+                refUpload.setValue(upload).addOnSuccessListener(aVoid -> {
+                dialog.dismissDialog();
+                Toast.makeText(getApplicationContext(), "Uplaod Feito com Sucesso!", Toast.LENGTH_SHORT).show();
+                   finish();
+                });
 
-                            finish();
-                        });
-
-                    });
+            });
 
         })
 

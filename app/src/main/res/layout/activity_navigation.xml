@@ -16,6 +16,7 @@
     >
 
     <LinearLayout
+        android:id="@+id/nav_actionbar"
         android:layout_width="0dp"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
@@ -33,7 +34,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_menu_24dp"
-            ></ImageView>
+        ></ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -43,9 +44,19 @@
             android:textColor="@android:color/white"
             android:textSize="18dp"
             android:textStyle="bold"
-            ></TextView>
+        ></TextView>
 
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nav_actionbar"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/nav_graph"
+    ></fragment>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

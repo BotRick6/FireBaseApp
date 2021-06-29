@@ -15,7 +15,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnCadastrar;
     private Button btnLogin;
     private EditText editEmail, editSenha;
-
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
@@ -25,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
 
         btnCadastrar = findViewById(R.id.login_btn_cadastrar);
         btnLogin = findViewById(R.id.login_btn_logar);
-
         editEmail  = findViewById(R.id.login_edit_email);
         editSenha = findViewById(R.id.login_edit_senha);
 
@@ -33,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         if(auth.getCurrentUser()!=null){
             String email = auth.getCurrentUser().getEmail();
 
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
 
             //passar o email para a MainActivity
             intent.putExtra("email", email);

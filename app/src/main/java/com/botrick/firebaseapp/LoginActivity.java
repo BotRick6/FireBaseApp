@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         .addOnSuccessListener(authResult -> {
             Toast.makeText(this,"Bem Vindo!", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
 
             startActivity(intent);
         })

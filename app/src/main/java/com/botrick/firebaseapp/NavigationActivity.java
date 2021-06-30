@@ -7,12 +7,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class NavigationActivity extends AppCompatActivity {
     private ImageView btnMenu;
     private DrawerLayout drawerLayout;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,22 @@ public class NavigationActivity extends AppCompatActivity {
 
         btnMenu.setOnClickListener(v -> {
             drawerLayout.openDrawer(GravityCompat.START);
+        });
+
+        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_nome)).setText(auth.getCurrentUser().getDisplayName());
+        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_email)).setText(auth.getCurrentUser().getEmail());
+
+        //TextView textNome = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_nome);
+        //TextView textEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_email);
+
+        //textNome.setText(auth.getCurrentUser().getDisplayName());
+        //textEmail.setText(auth.getCurrentUser().getEmail());
+
+        //evento de logout
+        navigationView.getMenu().findItem(R.id.nav_menu_logout).setOnMenuItemClickListener(item -> {
+            auth.signOut();
+            finish();
+           return false;
         });
 
         //Recuperar o navController -> realiza a troca de fragment

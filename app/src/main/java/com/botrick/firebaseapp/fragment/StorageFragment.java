@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.botrick.firebaseapp.R;
 import com.botrick.firebaseapp.model.Upload;
 import com.botrick.firebaseapp.util.LoadinDialog;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,6 +45,7 @@ public class StorageFragment extends Fragment {
 
     //referencia para um nó RealtimeDB
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference("uploads");
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public StorageFragment() {
         // Required empty public constructor
@@ -52,6 +54,8 @@ public class StorageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        database = FirebaseDatabase.getInstance().getReference("uploads").child(auth.getUid());
+
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_storage, container, false);
 
@@ -80,7 +84,7 @@ public class StorageFragment extends Fragment {
             //intent implicita
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.setType("imagem/*");
+            intent.setType("image/*");
 
             //inicia uma activity, e espera um retorno (foto)
             startActivityForResult(intent, 111);

@@ -16,7 +16,6 @@ import android.widget.EditText;
 import com.botrick.firebaseapp.NavigationActivity;
 import com.botrick.firebaseapp.R;
 import com.botrick.firebaseapp.util.NotificationReceiver;
-
 import static com.botrick.firebaseapp.util.App.CHANNEL_1;
 
 /**

@@ -24,5 +24,10 @@
         android:name="com.botrick.firebaseapp.fragment.StorageFragment"
         tools:layout="@layout/fragment_storage"
     ></fragment>
+    <fragment
+        android:id="@+id/nav_menu_notification"
+        android:name="com.botrick.firebaseapp.fragment.NotificationFragment"
+        tools:layout="@layout/fragment_notification"
+        />
 
 </navigation>
